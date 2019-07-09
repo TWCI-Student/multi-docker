@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  # Build the test image
+  - docker build -t twci/fib-react -f ./client/Dockerfile.dev ./client
+
+scripts:
+  # Run tests
+  - docker run twci/fib-react npm test -- --coverage
+
+after_success:
+  # Build the docker images for production
+  - docker build -t twci/multi-client ./client
+  - docker build -t twci/multi-nginx ./nginx
+  - docker build -t twci/multi-server ./server
+  - docker build -t twci/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push twci/multi-client
+  - docker push twci/multi-nginx
+  - docker push twci/multi-server
+  - docker push twci/multi-worker
