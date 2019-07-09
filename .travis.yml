@@ -13,7 +13,7 @@ before_install:
 
 scripts:
   # Run tests
-  - docker run twci/fib-react npm test -- --coverage
+  - docker run -e CI=true twci/fib-react npm test
 
 after_success:
   # Build the docker images for production
