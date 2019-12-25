@@ -1,0 +1,25 @@
+# This file is used to create a Deployment object
+
+# For creating a Deployment object we have to use api version apps/v1
+apiVersion: apps/v1
+kind: Deployment # A Deployment object is responsible for creating Pods
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1 # Number of identical pods that will be created
+  # This information will be passed to the master.
+  # In this case the Deployment objects asks the master
+  #  for creting a pod with the label 'component: web'.
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata: # Metadata of the created Pods
+      labels:
+        component: web
+    spec:
+      containers: # List of containers inside the Pod
+        - name: client
+          image: twci/multi-client
+          ports:
+            - containerPort: 3000

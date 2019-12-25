@@ -3,6 +3,8 @@
 apiVersion: v1
 
 # Services can setup networking in a K8s cluster
+# This service will act as a proxy that redirects traffic to a pod,
+#  because a pod has its own IP address and it will change ver time
 kind: Service
 metadata:
   name: client-node-port
@@ -14,5 +16,5 @@ spec:
     - port: 3050 # This port can be accessed by another pod inside the node
       targetPort: 3000 # This is the port of the container
       nodePort: 31515 # This port can be used to access the pod from the outside world. If this is not defiend then this port gets a random number automatically.
-  selector: # Look for objects with these labels
+  selector: # Look for objects (pods) with these labels
     component: web
