@@ -8,7 +8,7 @@ $ kubectl apply -f <dir_name>
 # Delete an object
 $ kubectl delete -f <filename>
 $ kubectl delete <object_type> <object_name>
-$ kubectl delete <dir_name>
+$ kubectl delete -f <dir_name>
 ```
 
 ## Satus of Objects
